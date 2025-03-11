@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galerie d'images</title>
     <link rel="stylesheet" href="styles.css">
+    <script src=""></script>
 </head>
 <body>
     <h1>Galerie d'images</h1>
@@ -58,5 +59,44 @@
             <figcaption>Photo 12</figcaption>
         </figure>
     </div>
+    <div class="lightbox" id="lightbox">
+        <span class="close">&times;</span>
+        <img class="lightbox-img" alt="Agrandissement photo">
+        <div class="lightbox-caption"></div>
+    </div>
+    <script>
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.querySelector('.lightbox-img');
+        const lightboxCaption = document.querySelector('.lightbox-caption');
+        const closeBtn = document.querySelector('.close');
+    
+        // Ouvrir la lightbox
+        document.querySelectorAll('.gallery img').forEach(img => {
+            img.addEventListener('click', (e) => {
+                lightbox.classList.add('active');
+                lightboxImg.src = e.target.src;
+                lightboxCaption.textContent = e.target.parentNode.querySelector('figcaption').textContent;
+            });
+        });
+    
+        // Fermer la lightbox
+        closeBtn.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+    
+        // Fermer en cliquant en dehors de l'image
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+            }
+        });
+    
+        // Fermer avec la touche Échap
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                lightbox.classList.remove('active');
+            }
+        });
+    </script>
 </body>
 </html>
